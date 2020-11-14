@@ -158,6 +158,12 @@ public class Hand {
         return cards.get(index);
     }
 
+    /**
+     * Get all of the Cards
+     */
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 
     /**
      * Get the size of the Hand
@@ -339,6 +345,7 @@ public class Hand {
         removeJokers(); // Remove Jokers from Hand
 
         int win = 0; // set to no win
+        int i = 1;
         for (Card deckCard1: deck.getDeck()){
             {
                 if (!cards.contains(deckCard1)) {
