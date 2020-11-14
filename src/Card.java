@@ -1,9 +1,9 @@
 /*
-Name: Kirk Sarrine
-LUID: L20178451
+Team: Meta Heads
+Members: Richard Aviles, Kirk Sarrine, Garrett West
 Course: COSC 1174 - Fall 2020
-Date: 10/18/2020
-Assignment: HW6 - Poker #3
+Project: Jokers Wild!
+Due: 11/22/2020
  */
 
 import javafx.scene.image.ImageView;
@@ -45,7 +45,8 @@ public class Card extends ImageView implements Comparable<Card> {
 
     /** toString() returns a string representation of the Card with the rank, suit and filePath of the Card image */
     public ImageView getBackImage() {
-        if (suit.equals("Hearts") || suit.equals("Diamonds")) return new ImageView("file:cards/" + "RedBack.png");
+        if (suit.equals("Hearts") || suit.equals("Diamonds") || suit.equals("RedJoker"))
+            return new ImageView("file:cards/" + "RedBack.png");
         else return new ImageView("file:cards/" + "BlackBack.png");
     }
 

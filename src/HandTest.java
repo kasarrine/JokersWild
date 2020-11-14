@@ -1,3 +1,11 @@
+/*
+Team: Meta Heads
+Members: Richard Aviles, Kirk Sarrine, Garrett West
+Course: COSC 1174 - Fall 2020
+Project: Jokers Wild!
+Due: 11/22/2020
+ */
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,6 +17,7 @@ public class HandTest extends Application {
         Card blackJoker = new Card("BlackJoker", "Joker");
         // Flush
         Hand hand = new Hand();
+        twoJokerTests();
     }
 
     public static void oneJokerTests() {

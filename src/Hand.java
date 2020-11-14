@@ -1,9 +1,9 @@
 /*
-Name: Kirk Sarrine
-LUID: L20178451
+Team: Meta Heads
+Members: Richard Aviles, Kirk Sarrine, Garrett West
 Course: COSC 1174 - Fall 2020
-Date: 10/18/2020
-Assignment: HW6 - Poker #3
+Project: Jokers Wild!
+Due: 11/22/2020
  */
 
 import java.util.*;
@@ -86,7 +86,8 @@ public class Hand {
         String rank = card.getRank();
         if (ranks.containsKey(rank))
             ranks.put(rank, ranks.get(rank) - 1);
-        if (ranks.get(rank) == 0)
+
+        if (ranks.containsKey(rank) && ranks.get(rank) == 0)
             ranks.remove(rank);
     }
 
@@ -297,7 +298,7 @@ public class Hand {
     }
 
     /**
-     * Test method for debugging winning hand types
+     * Gets the hand hype for a hand with no jokers
      */
     private String handWinType() {
         sort();
@@ -322,38 +323,30 @@ public class Hand {
     }
 
     /**
-     * Test method for debugging winning hand types
+     * Sets the win type for a hand that contains at least one joker
      */
     private Integer checkJokerWin() {
         sort();
         Set<Integer> wins = new HashSet<>();
-        if (checkForRoyalFlush()){
+        if (checkForRoyalFlush())
             wins.add(9);
-        }
-        else if (checkForStraightFlush()) {
+        else if (checkForStraightFlush())
             wins.add(8);
-        }
-        else if (checkForFourOfAKind()) {
+        else if (checkForFourOfAKind())
             wins.add(7);
-        }
-        else if (checkForFullHouse()) {
+        else if (checkForFullHouse())
             wins.add(6);
-        }
-        else if (checkForFlush()) {
+        else if (checkForFlush())
             wins.add(5);
-        }
-        else if (checkForStraight()) {
+        else if (checkForStraight())
             wins.add(4);
-        }
-        else if (checkForThreeOfAKind()) {
+        else if (checkForThreeOfAKind())
             wins.add(3);
-        }
-        else if (checkForTwoPairs()) {
+        else if (checkForTwoPairs())
             wins.add(2);
-        }
-        else {
+        else
             wins.add(0);
-        }
+
 
         return Collections.max(wins);
     }
@@ -377,63 +370,66 @@ public class Hand {
     }
 
     /**
-     * Test method for debugging winning hand types with Joker
+     * Checks for a winning hand with one joker and returns the hand type
      */
-    public String testOneJoker() {
+    private String testOneJoker() {
         Deck deck = new Deck();
-        deck.removeJokers();
-        int win = 0; // set to no win
-        for (Card card : cards) {
-            if (card.isJoker()) {
-                for (Card deckCard : deck.getDeck()) {
-                    ArrayList<Card> tempCards = new ArrayList<>(cards);
-                    tempCards.remove(card);
-                    tempCards.add(deckCard);
-                    Hand tempHand = new Hand();
-                    for (Card card1 : tempCards)
-                        tempHand.addCard(card1);
+        deck.removeJokers(); // Remove Jokers from Deck
+        removeJokers(); // Remove Jokers from Hand
 
-                    if (tempHand.checkForWin()) {
-                        if (tempHand.checkJokerWin() > win)
-                            win = tempHand.checkJokerWin();
+        int win = 0; // set to no win
+        for (Card deckCard1: deck.getDeck()){
+            {
+                if (!cards.contains(deckCard1)) {
+                    addCard(deckCard1);
+
+                    if (checkForWin()) {
+                        if (checkJokerWin() > win)
+                            win = checkJokerWin();
                     }
+                    removeCard(deckCard1);
                 }
             }
         }
         return getJokerWinType(win);
     }
 
-    public String testTwoJokers() {
+    /**
+     * Checks for a winning hand with two jokers and returns the hand type
+     */
+    private String testTwoJokers() {
         Deck deck = new Deck();
-        deck.removeJokers();
+        deck.removeJokers(); // Remove Jokers from Deck
+        removeJokers(); // Remove Jokers from Hand
+
         int win = 0; // set to no win
-        ArrayList<Card> tempCards = new ArrayList<>();
-        for (Card card: cards)
-            if (!card.isJoker()) tempCards.add(card);
 
         for (Card deckCard1: deck.getDeck()){
             for (Card deckCard2: deck.getDeck())
             {
                 if (deckCard1 != deckCard2 && !cards.contains(deckCard1) && !cards.contains(deckCard2)) {
-                    Hand tempHand = new Hand();
-                    for (Card card1 : tempCards)
-                        tempHand.addCard(card1);
-                    tempHand.addCard(deckCard1);
-                    tempHand.addCard(deckCard2);
+                    addCard(deckCard1);
+                    addCard(deckCard2);
 
-                    if (tempHand.checkForWin()) {
-                        if (tempHand.checkJokerWin() > win)
-                            win = tempHand.checkJokerWin();
+                    if (checkForWin()) {
+                        if (checkJokerWin() > win)
+                            win = checkJokerWin();
                     }
+                    removeCard(deckCard1);
+                    removeCard(deckCard2);
                 }
             }
         }
         return getJokerWinType(win);
     }
 
+    /**
+     * Checks for a winning hand and returns the hand type
+     */
     public String checkForWins(){
         Hand testHand = new Hand(this);
         int jokerCount = testHand.countJokers();
+
         if (jokerCount == 2)
             return testHand.testTwoJokers();
         else if (jokerCount == 1)

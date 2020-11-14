@@ -1,9 +1,9 @@
 /*
-Name: Kirk Sarrine
-LUID: L20178451
+Team: Meta Heads
+Members: Richard Aviles, Kirk Sarrine, Garrett West
 Course: COSC 1174 - Fall 2020
-Date: 10/18/2020
-Assignment: HW6 - Poker #3
+Project: Jokers Wild!
+Due: 11/22/2020
  */
 
 import java.util.*;
