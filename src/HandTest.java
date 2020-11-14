@@ -7,14 +7,15 @@ public class HandTest extends Application {
     {
         Card redJoker = new Card("RedJoker", "Joker");
         Card blackJoker = new Card("BlackJoker", "Joker");
-        Hand hand;
-        oneJokerTests();
+        // Flush
+        Hand hand = new Hand();
     }
 
     public static void oneJokerTests() {
         Hand hand = new Hand();
         Card redJoker = new Card("RedJoker", "Joker");
         Card blackJoker = new Card("BlackJoker", "Joker");
+        System.out.println("+++ONE JOKER TESTS+++");
 
         // Royal Flush
         hand = new Hand();
@@ -25,7 +26,6 @@ public class HandTest extends Application {
         hand.addCard(new Card("Diamonds", "Queen"));
         hand.addCard(new Card("Diamonds", "Jack"));
         hand.addCard(redJoker);
-        hand.addCard(blackJoker);
         System.out.println(hand);
         System.out.println(hand.checkForWins());
 
@@ -34,8 +34,9 @@ public class HandTest extends Application {
         hand = new Hand();
         System.out.println();
         System.out.println("Straight Flush Test.");
-        hand.addCard(new Card("Spades", "Eight"));
+        hand.addCard(new Card("Spades", "Three"));
         hand.addCard(new Card("Spades", "Seven"));
+        hand.addCard(new Card("Spades", "Five"));
         hand.addCard(new Card("Spades", "Four"));
         hand.addCard(redJoker);
         System.out.println(hand);
@@ -74,7 +75,7 @@ public class HandTest extends Application {
         hand.addCard(new Card("Spades", "Jack"));
         hand.addCard(new Card("Spades", "Eight"));
         hand.addCard(new Card("Spades", "Two"));
-        hand.addCard(new Card("Spades", "Nine"));
+        hand.addCard(redJoker);
         System.out.println(hand);
         System.out.println(hand.checkForWins());
 
@@ -101,13 +102,14 @@ public class HandTest extends Application {
         hand.addCard(redJoker);
         System.out.println(hand);
         System.out.println(hand.checkForWins());
-
+        System.out.println();
     }
 
     public static void twoJokerTests() {
         Hand hand = new Hand();
         Card redJoker = new Card("RedJoker", "Joker");
         Card blackJoker = new Card("BlackJoker", "Joker");
+        System.out.println("+++TWO JOKER TESTS+++");
 
         // Royal Flush
         System.out.println();
@@ -124,7 +126,7 @@ public class HandTest extends Application {
         hand = new Hand();
         System.out.println();
         System.out.println("Straight Flush Test.");
-        hand.addCard(new Card("Spades", "Eight"));
+        hand.addCard(new Card("Spades", "Three"));
         hand.addCard(new Card("Spades", "Seven"));
         hand.addCard(new Card("Spades", "Four"));
         hand.addCard(redJoker);
@@ -173,7 +175,7 @@ public class HandTest extends Application {
         hand = new Hand();
         System.out.println();
         System.out.println("Straight Test.");
-        hand.addCard(new Card("Heart", "Five"));
+        hand.addCard(new Card("Hearts", "Five"));
         hand.addCard(new Card("Clubs", "Nine"));
         hand.addCard(new Card("Spades", "Seven"));
         hand.addCard(redJoker);
@@ -192,7 +194,6 @@ public class HandTest extends Application {
         hand.addCard(blackJoker);
         System.out.println(hand);
         System.out.println(hand.checkForWins());
-
     }
     @Override
     public void start(Stage stage) {

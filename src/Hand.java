@@ -142,6 +142,14 @@ public class Hand {
     }
 
     /**
+     * Removes a Card from the Hand and updates the total value of the hand
+     */
+    public void removeCard(Card card) {
+        removeFromHashMaps(card);
+        cards.remove(card);
+    }
+
+    /**
      * Get the card at the specified index
      */
     public Card getCard(int index) {
@@ -172,6 +180,41 @@ public class Hand {
     }
 
     /**
+     * Removes Jokers from hand
+     */
+    private void removeJokers() {
+        cards.removeIf(Card::isJoker);
+        removeFromHashMaps(new Card("RedJoker", "Joker" ));
+        removeFromHashMaps(new Card("BlackJoker", "Joker" ));
+    }
+
+    /**
+     * Checks Hand to see if all cards contain the same suit
+     */
+    private boolean checkOrder(){
+        sort();
+        int firstCardOrder = getCard(0).getOrder();
+        for(Card card: cards)
+        {
+            if (card.getOrder() != firstCardOrder)
+                return false;
+            firstCardOrder++;
+        }
+        return true;
+    }
+
+    /**
+     * Checks Hand to see if all cards contain the same suit
+     */
+    private boolean checkSuites(){
+        String suit = getCard(0).getSuit();
+        for (Card card: cards)
+            if (!card.getSuit().equals(suit))
+                return false;
+        return true;
+    }
+
+    /**
      * Master Method for checking pairs in a Hand
      */
     private boolean checkForPairs(int count, int frequency) {
@@ -179,27 +222,27 @@ public class Hand {
     }
 
     /** Checks Hand for a Full house */
-    public boolean checkForFullHouse(){
+    private boolean checkForFullHouse(){
         return checkForPairs(3, 1) && checkForPairs(2, 1);
     }
 
 
     /** Checks Hand for Four of a Kind */
-    public boolean checkForFourOfAKind() {
+    private boolean checkForFourOfAKind() {
         return (checkForPairs(4, 1)); }
 
     /** Checks Hand for Three of a Kind */
-    public boolean checkForThreeOfAKind() {
+    private boolean checkForThreeOfAKind() {
         return checkForPairs(3, 1); }
 
     /** Checks Hand for Two of a Kind */
-    public boolean checkForTwoPairs () {
+    private boolean checkForTwoPairs () {
         return checkForPairs(2, 2); }
 
     /**
      * Checks Hand for a Royal Flush
      */
-    public boolean checkForRoyalFlush() {
+    private boolean checkForRoyalFlush() {
         Set<String> keys = new HashSet<>(Arrays.asList("Ace", "King", "Queen", "Jack", "Ten"));
         for (Map.Entry<String, ArrayList<String>> entry : suites.entrySet()) {
             Set<String> values = new HashSet<>(entry.getValue());
@@ -211,45 +254,22 @@ public class Hand {
     /**
      * Checks Hand for a Flush
      */
-    public boolean checkForFlush() {
-        for (Map.Entry<String, ArrayList<String>> entry : suites.entrySet()) {
-            ArrayList<String> suite = entry.getValue();
-            int size = suite.size();
-            if (size == 5)
-                return true;
-        }
-        return false;
+    private boolean checkForFlush() {
+       return !checkOrder() && checkSuites();
     }
 
     /**
      * Checks Hand for a Straight Flush
      */
-    public boolean checkForStraightFlush() {
-        sort();
-        return cards.get(0).getOrder() +  1 == cards.get(1).getOrder() &&
-                cards.get(1).getOrder() + 1 == cards.get(2).getOrder() &&
-                cards.get(2).getOrder() + 1 == cards.get(3).getOrder() &&
-                cards.get(3).getOrder() + 1 == cards.get(4).getOrder() &&
-                cards.get(0).getSuit().equals(cards.get(1).getSuit()) &&
-                cards.get(1).getSuit().equals(cards.get(2).getSuit()) &&
-                cards.get(2).getSuit().equals(cards.get(3).getSuit()) &&
-                cards.get(3).getSuit().equals(cards.get(4).getSuit());
+    private boolean checkForStraightFlush() {
+        return  checkOrder() && checkSuites();
     }
 
     /**
      * Checks Hand for a Straight
      */
-    public boolean checkForStraight() {
-        sort();
-        int maxSize = 0;
-        for (Map.Entry<String, ArrayList<String>> entry : suites.entrySet())
-            if (entry.getValue().size() > maxSize)
-                maxSize = entry.getValue().size();
-
-        return cards.get(0).getOrder() +  1 == cards.get(1).getOrder() &&
-                cards.get(1).getOrder() + 1 == cards.get(2).getOrder() &&
-                cards.get(2).getOrder() + 1 == cards.get(3).getOrder() &&
-                cards.get(3).getOrder() + 1 == cards.get(4).getOrder() && maxSize < 5;
+    private boolean checkForStraight() {
+        return checkOrder() && !checkSuites();
     }
 
     /**
@@ -269,7 +289,8 @@ public class Hand {
     /**
      * Master method to check for a winning hand
      */
-    public boolean checkForWin() {
+    private boolean checkForWin() {
+        sort();
         return checkForRoyalFlush() || checkForStraightFlush() || checkForFourOfAKind()
                 || checkForFullHouse() || checkForFlush() || checkForStraight()
                 || checkForThreeOfAKind() || checkForTwoPairs();
@@ -278,7 +299,8 @@ public class Hand {
     /**
      * Test method for debugging winning hand types
      */
-    public String handWinType() {
+    private String handWinType() {
+        sort();
         if (checkForRoyalFlush())
             return "Royal Flush.";
         else if (checkForStraightFlush())
@@ -288,7 +310,7 @@ public class Hand {
         else if (checkForFullHouse())
             return "Full House";
         else if (checkForFlush())
-            return "Flush";
+            return "Flush.";
         else if (checkForStraight())
             return "Straight.";
         else if (checkForThreeOfAKind())
@@ -303,25 +325,35 @@ public class Hand {
      * Test method for debugging winning hand types
      */
     private Integer checkJokerWin() {
+        sort();
         Set<Integer> wins = new HashSet<>();
-        if (checkForRoyalFlush())
+        if (checkForRoyalFlush()){
             wins.add(9);
-        else if (checkForStraightFlush())
+        }
+        else if (checkForStraightFlush()) {
             wins.add(8);
-        else if (checkForFourOfAKind())
+        }
+        else if (checkForFourOfAKind()) {
             wins.add(7);
-        else if (checkForFullHouse())
+        }
+        else if (checkForFullHouse()) {
             wins.add(6);
-        else if (checkForFlush())
+        }
+        else if (checkForFlush()) {
             wins.add(5);
-        else if (checkForStraight())
+        }
+        else if (checkForStraight()) {
             wins.add(4);
-        else if (checkForThreeOfAKind())
+        }
+        else if (checkForThreeOfAKind()) {
             wins.add(3);
-        else if (checkForTwoPairs())
+        }
+        else if (checkForTwoPairs()) {
             wins.add(2);
-        else
+        }
+        else {
             wins.add(0);
+        }
 
         return Collections.max(wins);
     }
@@ -351,24 +383,24 @@ public class Hand {
         Deck deck = new Deck();
         deck.removeJokers();
         int win = 0; // set to no win
-            for (Card card : cards) {
-                if (card.isJoker()) {
-                    for (Card deckCard : deck.getDeck()) {
-                            ArrayList<Card> tempCards = new ArrayList<>(cards);
-                            tempCards.remove(card);
-                            tempCards.add(deckCard);
-                            Hand tempHand = new Hand();
-                            for (Card card1 : tempCards)
-                                tempHand.addCard(card1);
+        for (Card card : cards) {
+            if (card.isJoker()) {
+                for (Card deckCard : deck.getDeck()) {
+                    ArrayList<Card> tempCards = new ArrayList<>(cards);
+                    tempCards.remove(card);
+                    tempCards.add(deckCard);
+                    Hand tempHand = new Hand();
+                    for (Card card1 : tempCards)
+                        tempHand.addCard(card1);
 
-                            if (tempHand.checkForWin()) {
-                                if (tempHand.checkJokerWin() > win)
-                                    win = tempHand.checkJokerWin();
-                            }
+                    if (tempHand.checkForWin()) {
+                        if (tempHand.checkJokerWin() > win)
+                            win = tempHand.checkJokerWin();
                     }
                 }
             }
-            return getJokerWinType(win);
+        }
+        return getJokerWinType(win);
     }
 
     public String testTwoJokers() {
@@ -400,12 +432,13 @@ public class Hand {
     }
 
     public String checkForWins(){
-        int jokerCount = countJokers();
+        Hand testHand = new Hand(this);
+        int jokerCount = testHand.countJokers();
         if (jokerCount == 2)
-            return testTwoJokers();
+            return testHand.testTwoJokers();
         else if (jokerCount == 1)
-            return testOneJoker();
+            return testHand.testOneJoker();
         else
-            return handWinType();
+            return testHand.handWinType();
     }
 }
