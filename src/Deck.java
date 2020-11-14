@@ -45,11 +45,11 @@ public class Deck {
         deck.remove(new Card("RedJoker", "Joker" ));
         deck.remove(new Card("BlackJoker", "Joker" ));
     }
-    /** Deals the top card and removes from the Deck */
+    /** Adds cards from a discarded pile to the Deck when Deck has 25% or less cards left */
     public void addCards(ArrayList<Card> discardedCards)
     {
-        // If deck size is less than 5, add all cards from the discarded pile
-        if (deck.size() < 5) {
+        // If deck size is less than 25%, add all cards from the discarded pile
+        if (deck.size()/54.0 <= 25.0/100.0 ) {
             deck.addAll(discardedCards);     // Add all discardedCards
             discardedCards.clear();          // Clear discardedCards
             shuffle();                       // Shuffle the deck
