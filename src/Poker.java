@@ -150,6 +150,7 @@ public class Poker extends Application {
         borderPane.setRight(vBoxBets);                                  // Add vBoxBets to right of borderPane
 
         Scene scene = new Scene(borderPane);                            // Create a scene and place it in the stage
+        primaryStage.setTitle("Jokers Wild!");                          // Set the stage title
         primaryStage.setScene(scene);                                   // Place the scene in the stage
         primaryStage.show();                                            // Display the stage
     }
