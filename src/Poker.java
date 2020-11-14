@@ -278,7 +278,7 @@ public class Poker extends Application {
                         tfWins.setText("Wins: " + chips.getWins());
                         tfLosses.setText("Losses: " + chips.getLosses());
                         String win = hand.checkForWins();
-                        if (!win.equals("")) tfWinType.setText("Win Type: " + hand.checkForWins());
+                        if (!win.equals("")) tfWinType.setText("Win Type: " + win);
                     }
                 });
                 rtOldFace.get(i).play();

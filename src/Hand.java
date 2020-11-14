@@ -68,7 +68,8 @@ public class Hand {
         if (ranks.containsKey(card.getRank())) {
             int currentRank = ranks.get(card.getRank());
             ranks.put(card.getRank(), currentRank + 1);
-        } else ranks.put(card.getRank(), 1);
+        }
+        else ranks.put(card.getRank(), 1);
     }
 
     /**
@@ -143,7 +144,7 @@ public class Hand {
     }
 
     /**
-     * Removes a Card from the Hand and updates the total value of the hand
+     * Removes a Card from the Hand and updates the total value of the Hand
      */
     public void removeCard(Card card) {
         removeFromHashMaps(card);
@@ -151,7 +152,7 @@ public class Hand {
     }
 
     /**
-     * Get the card at the specified index
+     * Get the Card at the specified index
      */
     public Card getCard(int index) {
         return cards.get(index);
@@ -159,14 +160,14 @@ public class Hand {
 
 
     /**
-     * Get the size of the hand
+     * Get the size of the Hand
      */
     public int size() {
         return cards.size();
     }
 
     /**
-     * Clear all holds in the hand
+     * Clear all holds in the Hand
      */
     public void removeHolds() {
         for (Card card : cards)
@@ -181,7 +182,7 @@ public class Hand {
     }
 
     /**
-     * Removes Jokers from hand
+     * Removes all Jokers from Hand
      */
     private void removeJokers() {
         cards.removeIf(Card::isJoker);
@@ -190,7 +191,7 @@ public class Hand {
     }
 
     /**
-     * Checks Hand to see if all cards contain the same suit
+     * Checks Hand to see if all Cards contain the same suit
      */
     private boolean checkOrder(){
         sort();
@@ -205,7 +206,7 @@ public class Hand {
     }
 
     /**
-     * Checks Hand to see if all cards contain the same suit
+     * Checks Hand to see if all Cards contain the same suit
      */
     private boolean checkSuites(){
         String suit = getCard(0).getSuit();
@@ -288,75 +289,35 @@ public class Hand {
     }
 
     /**
-     * Master method to check for a winning hand
+     * Master method to check for a winning Hand
      */
-    private boolean checkForWin() {
-        sort();
-        return checkForRoyalFlush() || checkForStraightFlush() || checkForFourOfAKind()
-                || checkForFullHouse() || checkForFlush() || checkForStraight()
-                || checkForThreeOfAKind() || checkForTwoPairs();
-    }
-
-    /**
-     * Gets the hand hype for a hand with no jokers
-     */
-    private String handWinType() {
+    private int checkForWin() {
         sort();
         if (checkForRoyalFlush())
-            return "Royal Flush.";
+            return 9;
         else if (checkForStraightFlush())
-            return "Straight Flush.";
+            return 8;
         else if (checkForFourOfAKind())
-            return "Four of a kind.";
+            return 7;
         else if (checkForFullHouse())
-            return "Full House";
+            return 6;
         else if (checkForFlush())
-            return "Flush.";
+            return 5;
         else if (checkForStraight())
-            return "Straight.";
+            return 4;
         else if (checkForThreeOfAKind())
-            return "Three of a kind.";
+            return 3;
         else if (checkForTwoPairs())
-            return "Two pairs.";
+            return 2;
         else
-            return "";
+            return 0;
     }
 
     /**
-     * Sets the win type for a hand that contains at least one joker
+     *  Returns the type of win as a String from an int
      */
-    private Integer checkJokerWin() {
-        sort();
-        Set<Integer> wins = new HashSet<>();
-        if (checkForRoyalFlush())
-            wins.add(9);
-        else if (checkForStraightFlush())
-            wins.add(8);
-        else if (checkForFourOfAKind())
-            wins.add(7);
-        else if (checkForFullHouse())
-            wins.add(6);
-        else if (checkForFlush())
-            wins.add(5);
-        else if (checkForStraight())
-            wins.add(4);
-        else if (checkForThreeOfAKind())
-            wins.add(3);
-        else if (checkForTwoPairs())
-            wins.add(2);
-        else
-            wins.add(0);
-
-
-        return Collections.max(wins);
-    }
-
-    /**
-     *  Checks
-     */
-    private String getJokerWinType(int num) {
+    private String getHandWinType(int num) {
         return switch (num) {
-            case 10 -> "Five of a kind.";
             case 9 -> "Royal Flush.";
             case 8 -> "Straight Flush.";
             case 7 -> "Four of a kind.";
@@ -370,9 +331,9 @@ public class Hand {
     }
 
     /**
-     * Checks for a winning hand with one joker and returns the hand type
+     * Checks for a winning Hand with one joker and returns the hand type as a String
      */
-    private String testOneJoker() {
+    private String checkForWinOneJoker() {
         Deck deck = new Deck();
         deck.removeJokers(); // Remove Jokers from Deck
         removeJokers(); // Remove Jokers from Hand
@@ -383,21 +344,21 @@ public class Hand {
                 if (!cards.contains(deckCard1)) {
                     addCard(deckCard1);
 
-                    if (checkForWin()) {
-                        if (checkJokerWin() > win)
-                            win = checkJokerWin();
-                    }
+                    int checkForWin = checkForWin();
+                    if (checkForWin() > win)
+                        win = checkForWin;
+
                     removeCard(deckCard1);
                 }
             }
         }
-        return getJokerWinType(win);
+        return getHandWinType(win);
     }
 
     /**
-     * Checks for a winning hand with two jokers and returns the hand type
+     * Checks for a winning Hand with two jokers and returns the hand type as a String
      */
-    private String testTwoJokers() {
+    private String checkForWinTwoJokers() {
         Deck deck = new Deck();
         deck.removeJokers(); // Remove Jokers from Deck
         removeJokers(); // Remove Jokers from Hand
@@ -411,30 +372,32 @@ public class Hand {
                     addCard(deckCard1);
                     addCard(deckCard2);
 
-                    if (checkForWin()) {
-                        if (checkJokerWin() > win)
-                            win = checkJokerWin();
+                    int checkForWin = checkForWin();
+                    if (checkForWin() > win) {
+                            win = checkForWin;
                     }
                     removeCard(deckCard1);
                     removeCard(deckCard2);
                 }
             }
         }
-        return getJokerWinType(win);
+        return getHandWinType(win);
     }
 
     /**
-     * Checks for a winning hand and returns the hand type
+     * Checks for a winning hand and returns the Hand type as a String
      */
     public String checkForWins(){
         Hand testHand = new Hand(this);
         int jokerCount = testHand.countJokers();
 
         if (jokerCount == 2)
-            return testHand.testTwoJokers();
+            return testHand.checkForWinTwoJokers();
         else if (jokerCount == 1)
-            return testHand.testOneJoker();
-        else
-            return testHand.handWinType();
+            return testHand.checkForWinOneJoker();
+        else {
+            int win = testHand.checkForWin();
+            return testHand.getHandWinType(win);
+        }
     }
 }

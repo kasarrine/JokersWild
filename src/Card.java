@@ -36,7 +36,6 @@ public class Card extends ImageView implements Comparable<Card> {
             case "King" -> order = 13;
             case "Ace" -> order = 14;
             case "Joker" -> order = 15;
-            default -> order = 0;
         }
 
         this.suit = suit;
@@ -59,36 +58,55 @@ public class Card extends ImageView implements Comparable<Card> {
     }
 
     /** Getter for Card Rank */
-    public String getRank() { return rank; }
+    public String getRank() {
+        return rank;
+    }
 
-    public int getOrder() {return order; }
+    /** Getter for Card Order */
+    public int getOrder() {
+        return order;
+    }
 
-    /** Setter to hold a card */
-    public void hold() { this.hold = true; }
+    /** Setter to hold a Card */
+    public void hold() {
+        this.hold = true;
+    }
 
     /** Setter to remove a hold */
     public void removeHold() {
         hold = false;
     }
 
-    /** Getter for card hold */
+    /** Getter for Card hold */
     public boolean checkHold() {
         return hold;
     }
 
-    public boolean isJoker() { return rank.equals("Joker"); }
+    /** Checks if a Card is a Joker */
+    public boolean isJoker() {
+        return rank.equals("Joker");
+    }
 
+    /** Equals method for Card */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Card card = (Card) o;
         return suit.equals(card.suit) && rank.equals(card.rank);
     }
 
+    /** HashCode method for Card */
     @Override
-    public int hashCode() { return Objects.hash(suit, rank); }
+    public int hashCode() {
+        return Objects.hash(suit, rank);
+    }
 
+    /** CompareTo method for Card */
     @Override
-    public int compareTo(Card o) { return Integer.compare(this.order, getOrder()); }
+    public int compareTo(Card o) {
+        return Integer.compare(this.order, getOrder());
+    }
 }

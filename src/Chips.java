@@ -14,26 +14,49 @@ public class Chips {
         balance = 200;
     }
 
-    /** Checks for a winning hand. If  */
-    public void checkForWin(Hand hand){
-        if (!hand.checkForWins().equals("")) {
-            wins++;
-            balance += (2 * bet);
+    /** Checks for a winning hand. */
+    public void checkForWin(Hand hand) {
+        switch (hand.checkForWins()) {
+            case "Royal Flush." -> setPayout(10);
+            case "Straight Flush." -> setPayout(9);
+            case "Four of a kind." -> setPayout(8);
+            case "Full House." -> setPayout(7);
+            case "Flush." -> setPayout(6);
+            case "Straight." -> setPayout(5);
+            case "Three of a kind." -> setPayout(4);
+            case "Two pairs." -> setPayout(3);
+            default -> losses++;
         }
-        else {
-            losses++;
-        }
+        clearBet();
+    }
+
+    /** Sets the payout based on the type of a winning hand */
+    private void setPayout(int num)
+    {
+        balance += (num * bet);
+        wins++;
+    }
+
+    /** Clears the current bet */
+    private void clearBet()
+    {
         bet = 0;
     }
 
     /** Getter for balance  */
-    public int getBalance() { return balance; }
+    public int getBalance() {
+        return balance;
+    }
 
     /** Decrements the current bet to the account balance  */
-    public void applyBetToBalance() { this.balance -= bet; }
+    public void applyBetToBalance() {
+        this.balance -= bet;
+    }
 
     /** Setter for the bet  */
-    public void setBet(int bet) { this.bet = bet; }
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
 
     /** Getter for the number of wins  */
     public int getWins() {
@@ -41,6 +64,8 @@ public class Chips {
     }
 
     /** Getter for the number of losses  */
-    public int getLosses() { return losses; }
+    public int getLosses() {
+        return losses;
+    }
 
 }
