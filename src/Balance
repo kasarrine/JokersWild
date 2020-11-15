@@ -47,7 +47,7 @@ public class Poker extends Application {
 
     boolean drawClicked;
     // Create TextFields and set initial values to each field
-    TextField tfBalance = new TextField("Balance:$" + chips.getBalance());
+    TextField tfBalance = new TextField("Balance: $" + String.format("%,d", chips.getBalance()));
     TextField tfWins = new TextField("Wins: " + chips.getWins());
     TextField tfLosses = new TextField("Losses: " + chips.getLosses());
     TextField tfWinType = new TextField("Win Type: ");
