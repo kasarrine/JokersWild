@@ -78,7 +78,7 @@ public class Poker extends Application {
         btDeal.setOnMouseClicked(actionEvent -> {                       // Set Action for deal button
             drawClicked = false;
             chips.applyBetToBalance();
-            tfBalance.setText("Balance: $" + chips.getBalance());       // Update to the current balance
+            tfBalance.setText("Balance: $" + String.format("%,d", chips.getBalance())); // Update to the current balance
             tfWinType.setText("Win Type: ");
             setDisableDealDraw();                                       // Disable bet and deal after click
             if (dealCount.get() < 1) {                                  // Only on first deal
@@ -275,7 +275,7 @@ public class Poker extends Application {
                     deselectAllHolds();                                     // Clear any holds on screen
                     clearBets();                                            // Clear bet RadioButtons
                     if (drawClicked) {
-                        tfBalance.setText("Balance: $" + chips.getBalance());   // Update fields on screen
+                        tfBalance.setText("Balance: $" + String.format("%,d", chips.getBalance())); // Update fields on screen
                         tfWins.setText("Wins: " + chips.getWins());
                         tfLosses.setText("Losses: " + chips.getLosses());
                         String win = hand.checkForWins();
