@@ -13,7 +13,7 @@ public class Deck {
     protected static final String[] suits =  new String[] {"Hearts", "Diamonds", "Spades", "Clubs"};
     private static final String[] ranks = new String[] {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Jack", "Queen", "King", "Ace"};
-    // ArrayList will store all of the 52 Cards
+    // ArrayList will store all of the 54 Cards (2 Jokers are Wild Cards)
     private final ArrayList<Card> deck;
 
     /** Default constructor for Deck. Creates the individual Deck Cards and adds them */
@@ -37,7 +37,9 @@ public class Deck {
     }
 
     /** Deals the top card and removes from the Deck */
-    public Card deal() { return deck.remove(0); }
+    public Card deal() {
+        return deck.remove(0);
+    }
 
     /** Removes all Jokers from the Deck */
     public void removeJokers()
@@ -45,6 +47,7 @@ public class Deck {
         deck.remove(new Card("RedJoker", "Joker" ));
         deck.remove(new Card("BlackJoker", "Joker" ));
     }
+
     /** Adds cards from a discarded pile to the Deck when Deck has 25% or less cards left */
     public void addCards(ArrayList<Card> discardedCards)
     {
