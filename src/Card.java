@@ -19,7 +19,7 @@ public class Card extends ImageView implements Comparable<Card> {
 
     /** Default constructor for Card. Creates an new Card with the suit, rank and value */
     public Card(String suit, String rank) {
-        super(new Image("file:cards/" + rank + "Of" + suit + ".png"));
+        super(new Image("file:images/cards/" + rank + "Of" + suit + ".png"));
         switch (rank) {
             case "One" -> order = 1;
             case "Two" -> order = 2;
@@ -45,8 +45,8 @@ public class Card extends ImageView implements Comparable<Card> {
     /** toString() returns a string representation of the Card with the rank, suit and filePath of the Card image */
     public ImageView getBackImage() {
         if (suit.equals("Hearts") || suit.equals("Diamonds") || suit.equals("RedJoker"))
-            return new ImageView("file:cards/" + "RedBack.png");
-        else return new ImageView("file:cards/" + "BlackBack.png");
+            return new ImageView("file:images/cards/" + "RedBack.png");
+        else return new ImageView("file:images/cards/" + "BlackBack.png");
     }
 
     /** toString() returns a string representation of the Card with the rank, suit and filePath of the Card image */

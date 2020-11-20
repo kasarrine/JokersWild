@@ -18,12 +18,12 @@ public class Icons {
     private final ComboBox<String> iconBox;
 
     public Icons() {
-        String icon1 = "cards/icon1.png";
-        String icon2 = "cards/icon2.png";
-        String icon3 = "cards/icon3.png";
-        String icon4 = "cards/icon4.png";
-        String icon5 = "cards/icon5.png";
-        String icon6 = "cards/icon6.png";
+        String icon1 = "file:images/icons/icon1.png";
+        String icon2 = "file:images/icons/icon2.png";
+        String icon3 = "file:images/icons/icon3.png";
+        String icon4 = "file:images/icons/icon4.png";
+        String icon5 = "file:images/icons/icon5.png";
+        String icon6 = "file:images/icons/icon6.png";
         ObservableList<String> iconList = FXCollections.observableArrayList(icon1,
                 icon2, icon3, icon4, icon5, icon6);
         iconBox = new ComboBox<>(iconList);
