@@ -283,14 +283,14 @@ public class Hand {
     /**
      * Getter for Suites HashMap
      */
-    public HashMap<String, ArrayList<String>> getSuites() {
+    private HashMap<String, ArrayList<String>> getSuites() {
         return suites;
     }
 
     /**
      * Getter for Ranks HashMap
      */
-    public HashMap<String, Integer> getRanks() {
+    private HashMap<String, Integer> getRanks() {
         return ranks;
     }
 
@@ -345,7 +345,6 @@ public class Hand {
         removeJokers(); // Remove Jokers from Hand
 
         int win = 0; // set to no win
-        int i = 1;
         for (Card deckCard1: deck.getDeck()){
             {
                 if (!cards.contains(deckCard1)) {

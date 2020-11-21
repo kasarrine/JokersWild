@@ -27,7 +27,7 @@ public class Icons {
         ObservableList<String> iconList = FXCollections.observableArrayList(icon1,
                 icon2, icon3, icon4, icon5, icon6);
         iconBox = new ComboBox<>(iconList);
-        iconBox.setCellFactory(param -> new IconListCell());
+        iconBox.setCellFactory(pram -> new IconListCell());
         iconBox.setButtonCell(new IconListCell());
     }
 

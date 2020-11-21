@@ -10,18 +10,18 @@ import java.util.*;
 
 public class Deck {
     // suits and ranks are used to build out a new Deck
-    protected static final String[] suits =  new String[] {"Hearts", "Diamonds", "Spades", "Clubs"};
-    private static final String[] ranks = new String[] {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+    private static final String[] SUITS =  new String[] {"Hearts", "Diamonds", "Spades", "Clubs"};
+    private static final String[] RANKS = new String[] {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Jack", "Queen", "King", "Ace"};
     // ArrayList will store all of the 54 Cards (2 Jokers are Wild Cards)
-    private final ArrayList<Card> deck;
+    private ArrayList<Card> deck;
 
     /** Default constructor for Deck. Creates the individual Deck Cards and adds them */
     public Deck() {
         deck = new ArrayList<>();
 
-        for(String suit: suits)                   // Nested enhanced for loop to build the deck from the suit and ranks
-            for(String rank: ranks)
+        for(String suit: SUITS)                   // Nested enhanced for loop to build the deck from the suit and ranks
+            for(String rank: RANKS)
                 deck.add(new Card(suit, rank));
         deck.add(new Card("RedJoker", "Joker" ));
         deck.add(new Card("BlackJoker", "Joker"));
@@ -67,7 +67,4 @@ public class Deck {
         for (int i = 0; i < 5; i++)
             Collections.shuffle(deck);
     }
-
-    /** Returns all card ranks */
-    protected static String[] getRanks() { return ranks; }
 }

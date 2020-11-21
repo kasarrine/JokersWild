@@ -19,11 +19,11 @@ public class Chips {
         switch (hand.checkForWins()) {
             case "Royal Flush." -> setPayout(10);
             case "Straight Flush." -> setPayout(9);
-            case "Four of a kind." -> setPayout(8);
+            case "Four of a Kind." -> setPayout(8);
             case "Full House." -> setPayout(7);
             case "Flush." -> setPayout(6);
             case "Straight." -> setPayout(5);
-            case "Three of a kind." -> setPayout(4);
+            case "Three of a Kind." -> setPayout(4);
             case "Two pairs." -> setPayout(3);
             default -> losses++;
         }
