@@ -36,8 +36,15 @@ The following is a list of 4 required features that were implemented in the game
 There are 6 class files: Card, Chips, Deck, Hand, Icons and Poker.
 The image files for the cards and avatars are stored within the cards and icons subfolders of the images folder.
 
-The development of this program was written in IntelliJ on macOS, Microsoft and Linux. Subsequently, the QA Testing of this program was run on all platforms.
+The development of this program was written in IntelliJ on macOS, Windows and Linux. Subsequently, the QA Testing of this program was run on all platforms.
 
-For requirements, in IntelliJ on all platforms the JavaFX Library is required to be loaded into the Project Structure. Additonally, VM arguments may be required in the run configuration. On macOS, the correct arguments are the following:
+If running in IntelliJ, on all platforms the JavaFX Library is required to be loaded into the Project Structure. 
+Additonally, VM arguments may be required in the run configuration. The correct arguments are the following:
 
---module-path **JAVA FX LIBRARY PATH*** --add-modules javafx.controls,javafx.fxml
+--module-path ***JAVA FX LIBRARY PATH*** --add-modules javafx.controls,javafx.fxml
+
+If running from the command line/terminal, change the directory to the src folder.
+Then, use the following commands to compile and run: 
+
+javac --module-path ***JAVA FX LIBRARY PATH*** --add-modules javafx.controls,javafx.fxml Poker.java
+java --module-path ***JAVA FX LIBRARY PATH*** --add-modules javafx.controls,javafx.fxml Poker
