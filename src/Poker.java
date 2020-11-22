@@ -423,16 +423,12 @@ public class Poker extends Application {
         }
     }
 
-    /** Checks for winning hand. Terminal output is for debugging purposes. */
+    /** Checks for winning hand. */
     private void checkWins() {
         String win = hand.checkForWins();
         boolean didWin = !win.equals("");
-        System.out.println("Winning hand? " + didWin);
         if (didWin) System.out.println("Hand type: " + hand.checkForWins());
         chips.checkForWin(hand);
-        System.out.println("Balance: $" + chips.getBalance());
-        System.out.println("Wins: " + chips.getWins() + ", Losses: " + chips.getLosses());
-        System.out.println();
     }
 
     /** Clears the hold on cards held in hand */
